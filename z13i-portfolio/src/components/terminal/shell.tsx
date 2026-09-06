@@ -35,6 +35,9 @@ const NAV_ICONS: Record<PageId, typeof User> = {
   infrastructure: ChevronRight,
   contact: ChevronRight,
 };
+const VISITOR_API_URL =
+  import.meta.env.VITE_VISITOR_API_URL ??
+  "https://3r1qwdzxeg.execute-api.eu-west-3.amazonaws.com/prod/visit-count";
 
 export function TerminalShell({ children }: { children: ReactNode }) {
   const pathname = useLocation({ select: (l) => l.pathname });
@@ -49,15 +52,14 @@ export function TerminalShell({ children }: { children: ReactNode }) {
   const [paletteQuery, setPaletteQuery] = useState("");
   const [focusSignal, setFocusSignal] = useState(0);
   const [clock, setClock] = useState("");
+  const [visitorCount, setVisitorCount] = useState(0);
   const [dangerousCommand, setDangerousCommand] = useState<string | null>(null);
   const [booting, setBooting] = useState(true);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window === "undefined") return "light";
     const stored = window.localStorage.getItem("portfolio-theme");
     if (stored === "light" || stored === "dark") return stored;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+    return "light";
   });
 
   const outletKey = useRouterState({
@@ -87,6 +89,28 @@ export function TerminalShell({ children }: { children: ReactNode }) {
     tick();
     const id = window.setInterval(tick, 1000);
     return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    fetch(VISITOR_API_URL)
+      .then((response) => {
+        if (!response.ok) throw new Error("Visitor API request failed");
+        return response.json() as Promise<{
+          visit_count?: unknown;
+          body?: string | { visit_count?: unknown };
+        }>;
+      })
+      .then((data) => {
+        const payload =
+          typeof data.body === "string" ? JSON.parse(data.body) : data.body ?? data;
+        if (
+          typeof payload.visit_count === "number" &&
+          Number.isFinite(payload.visit_count)
+        ) {
+          setVisitorCount(payload.visit_count);
+        }
+      })
+      .catch(() => undefined);
   }, []);
 
   useEffect(() => {
@@ -292,6 +316,7 @@ export function TerminalShell({ children }: { children: ReactNode }) {
           <StatusBar
             current={current}
             clock={clock}
+            visitorCount={visitorCount}
             onJump={(path) => void navigate({ to: path })}
           />
         </div>
@@ -369,10 +394,42 @@ function DangerousCommandOverlay({
 }
 
 function NeofetchPanel() {
+  const [maximized, setMaximized] = useState(false);
+  const [minimized, setMinimized] = useState(false);
+  const [closeMessage, setCloseMessage] = useState(false);
+
+  useEffect(() => {
+    if (!closeMessage) return;
+    const id = window.setTimeout(() => setCloseMessage(false), 2600);
+    return () => window.clearTimeout(id);
+  }, [closeMessage]);
+
+  if (minimized) {
+    return (
+      <button
+        type="button"
+        onClick={() => setMinimized(false)}
+        className="term-neofetch-minimized"
+      >
+        <span className="size-2 rounded-full bg-traffic-max" />
+        <span>neofetch</span>
+        <span className="text-term-dim">restore</span>
+      </button>
+    );
+  }
+
   return (
-    <section className="term-neofetch-window" aria-label="System information">
+    <section
+      className={cn("term-neofetch-window", maximized && "term-neofetch-maximized")}
+      aria-label="System information"
+    >
       <header className="term-neofetch-title">
-        <WindowDots />
+        <WindowDots
+          maximized={maximized}
+          onClose={() => setCloseMessage(true)}
+          onMin={() => setMinimized(true)}
+          onMax={() => setMaximized((value) => !value)}
+        />
         <span>neofetch</span>
       </header>
       <div className="term-neofetch-body">
@@ -396,6 +453,23 @@ function NeofetchPanel() {
           </p>
         </div>
       </div>
+      {closeMessage ? (
+        <>
+          <button
+            type="button"
+            aria-label="Dismiss message"
+            className="term-neofetch-alert-backdrop"
+            onClick={() => setCloseMessage(false)}
+          />
+          <div className="term-neofetch-alert" role="alertdialog" aria-modal="true">
+            <strong>nope, sir</strong>
+            <span>neofetch is staying right here.</span>
+            <button type="button" onClick={() => setCloseMessage(false)}>
+              keep it open
+            </button>
+          </div>
+        </>
+      ) : null}
     </section>
   );
 }
@@ -419,12 +493,37 @@ function QuotePanel() {
   );
 }
 
-function WindowDots() {
+function WindowDots({
+  maximized,
+  onClose,
+  onMin,
+  onMax,
+}: {
+  maximized: boolean;
+  onClose: () => void;
+  onMin: () => void;
+  onMax: () => void;
+}) {
   return (
-    <span className="term-window-dots" aria-hidden="true">
-      <span className="size-2.5 rounded-full bg-traffic-close" />
-      <span className="size-2.5 rounded-full bg-traffic-min" />
-      <span className="size-2.5 rounded-full bg-traffic-max" />
+    <span className="term-window-dots">
+      <button
+        type="button"
+        aria-label="Close neofetch"
+        onClick={onClose}
+        className="term-window-dot bg-traffic-close"
+      />
+      <button
+        type="button"
+        aria-label="Minimize neofetch"
+        onClick={onMin}
+        className="term-window-dot bg-traffic-min"
+      />
+      <button
+        type="button"
+        aria-label={maximized ? "Restore neofetch" : "Maximize neofetch"}
+        onClick={onMax}
+        className="term-window-dot bg-traffic-max"
+      />
     </span>
   );
 }
@@ -600,10 +699,12 @@ function Sidebar({
 function StatusBar({
   current,
   clock,
+  visitorCount,
   onJump,
 }: {
   current: (typeof NAV)[number];
   clock: string;
+  visitorCount: number;
   onJump: (path: string) => void;
 }) {
   return (
@@ -637,7 +738,7 @@ function StatusBar({
           data-visitor-counter
           aria-label="Visitor count"
         >
-          Visitors: 0
+          Visitors: {visitorCount}
         </span>
         <span className="tabular-nums">{clock || "—"}</span>
       </div>

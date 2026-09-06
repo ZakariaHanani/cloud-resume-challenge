@@ -239,8 +239,17 @@ export function CommandLine({
   ]);
   const [history, setHistory] = useState<string[]>([]);
   const [histIdx, setHistIdx] = useState(-1);
+  const [maximized, setMaximized] = useState(false);
+  const [minimized, setMinimized] = useState(false);
+  const [closeMessage, setCloseMessage] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const logRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!closeMessage) return;
+    const id = window.setTimeout(() => setCloseMessage(false), 2600);
+    return () => window.clearTimeout(id);
+  }, [closeMessage]);
 
   useEffect(() => {
     if (focusSignal > 0) inputRef.current?.focus();
@@ -282,13 +291,42 @@ export function CommandLine({
     }
   }
 
+  if (minimized) {
+    return (
+      <button
+        type="button"
+        onClick={() => setMinimized(false)}
+        className="term-command-minimized"
+      >
+        <span className="size-2 rounded-full bg-traffic-max" />
+        <span>shell</span>
+        <span className="text-term-dim">restore</span>
+      </button>
+    );
+  }
+
   return (
-    <div className="term-command-window">
+    <div className={cn("term-command-window", maximized && "term-command-maximized")}>
       <div className="term-command-title">
-        <span className="term-window-dots" aria-hidden="true">
-          <span className="size-2.5 rounded-full bg-traffic-close" />
-          <span className="size-2.5 rounded-full bg-traffic-min" />
-          <span className="size-2.5 rounded-full bg-traffic-max" />
+        <span className="term-window-dots">
+          <button
+            type="button"
+            aria-label="Close shell"
+            onClick={() => setCloseMessage(true)}
+            className="term-window-dot bg-traffic-close"
+          />
+          <button
+            type="button"
+            aria-label="Minimize shell"
+            onClick={() => setMinimized(true)}
+            className="term-window-dot bg-traffic-min"
+          />
+          <button
+            type="button"
+            aria-label={maximized ? "Restore shell" : "Maximize shell"}
+            onClick={() => setMaximized((value) => !value)}
+            className="term-window-dot bg-traffic-max"
+          />
         </span>
         <span>shell</span>
       </div>
@@ -353,6 +391,23 @@ export function CommandLine({
           className="min-w-0 flex-1 bg-transparent text-xs text-term-fg outline-none placeholder:text-term-dim"
         />
       </form>
+      {closeMessage ? (
+        <>
+          <button
+            type="button"
+            aria-label="Dismiss message"
+            className="term-neofetch-alert-backdrop"
+            onClick={() => setCloseMessage(false)}
+          />
+          <div className="term-neofetch-alert" role="alertdialog" aria-modal="true">
+            <strong>nope, sir</strong>
+            <span>the shell is staying right here.</span>
+            <button type="button" onClick={() => setCloseMessage(false)}>
+              keep it open
+            </button>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

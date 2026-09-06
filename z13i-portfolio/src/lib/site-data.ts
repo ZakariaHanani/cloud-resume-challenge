@@ -35,14 +35,13 @@ export const PROFILE = {
   githubUrl: "https://github.com/ZakariaHanani",
   linkedin: "zakariahanani",
   linkedinUrl: "https://www.linkedin.com/in/zakaria-hanani-72518123a/",
-  website: "zakariahanani.dev",
-  websiteUrl: "https://zakariahanani.dev",
-  x: "@zakaria13i",
-  xUrl: "https://x.com/zakaria13i",
+  website: "zakariahanani.com",
+  websiteUrl: "https://zakariahanani.com",
   summary: [
-    "I build reliable, scalable, and cloud-native systems.",
-    "I love automating infrastructure, shipping code, and optimizing workflows.",
-    "Currently focused on DevOps, Cloud, and Distributed Systems.",
+    "Breaking things, fixing them, automating them — and occasionally wondering why they broke in the first place.",
+    "Linux, containers, cloud infrastructure, distributed systems, and a lot of terminal time",
+    "Currently somewhere between DevOps, Cloud, and “let me see how this actually works under the hood."
+
   ],
   note: "I'm not a frontend developer (and honestly, I never enjoyed it). I prefer building robust backend systems and reliable infrastructure. Frontend is just something I do when I have to — because of AI.",
 } as const;
@@ -87,7 +86,9 @@ export function pageFromPath(pathname: string): NavItem {
 }
 
 export const EXPERIENCE = [
-  { period: "2024", role: "PFE Intern", org: "Vala Bleu — Agadir", points: [ "Developed an attendance management system with a Django backend and Flutter mobile application.", "Implemented QR-code-based attendance tracking and integrated the mobile application with the backend API.", ], }, { period: "2024", role: "Freelance Web Developer", org: "Roti d'Or", points: [ "Designed and developed a business website for a local food business.", "Built and customized the website based on the client's requirements and delivered a production-ready solution.", ], }, { period: "2024", role: "Software Engineering Intern", org: "Commune Urbaine de Biougra", points: [ "Participated in an internship focused on discovering information systems and administrative workflows.", ], }, ] as const;
+  { period: "2024", role: "Android Developer Intern", org: "Vala Bleu — Agadir", points: [ "Developed an Android mobile application to showcase the company's services and provide users with information about its offerings.", "Designed and implemented the application's interface and functionality based on the company's requirements.", ], }  , 
+  { period: "2024", role: "Freelance Web Developer", org: "Roti d'Or", points: [ "Designed and developed a business website for a local food business.", "Built and customized the website based on the client's requirements and delivered a production-ready solution.", ], },
+  { period: "2023", role: "Software Engineering Intern", org: "Commune Urbaine de Biougra", points: [ "Participated in an internship focused on discovering information systems and administrative workflows.", ], }, ] as const;
 
 export type TechGroup = {
   title: string;
@@ -110,7 +111,6 @@ export const STACK: TechGroup[] = [
     items: [
       { name: "Docker", mark: "docker" },
       { name: "Kubernetes", mark: "k8s" },
-      { name: "Docker Compose", mark: "docker-compose" },
       { name: "Minikube", mark: "minikube" },
     ],
   },
