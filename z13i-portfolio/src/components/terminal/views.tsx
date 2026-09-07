@@ -295,7 +295,7 @@ function InfraDiagram() {
   const db = <InfraNode tone="green" title="DynamoDB" subtitle="Visitor Count" icon={<Database className="size-4" />} />;
   
   // CI/CD
-  const cicd = <InfraNode tone="user" title="GitHub Actions" subtitle="CI/CD (WIP)" icon={<GitBranch className="size-4" />} />;
+  const cicd = <InfraNode tone="user" title="GitHub Actions" subtitle="CI/CD" icon={<GitBranch className="size-4" />} />;
 
   return (
     <>
