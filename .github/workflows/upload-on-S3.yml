@@ -22,7 +22,7 @@ jobs:
             - name: install dependencies
               run: |
                cd z13i-portfolio
-               npm install   
+               npm ci   
               
             - name: build
               run: |
