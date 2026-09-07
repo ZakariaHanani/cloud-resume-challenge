@@ -10,10 +10,9 @@ import {
   Mail,
   MapPin,
   Network,
-  Shield,
   Star,
-  Terminal,
   User,
+  Zap,
 } from "lucide-react";
 import { TechMark } from "@/components/terminal/tech-icons";
 import {
@@ -77,11 +76,6 @@ export function AboutView() {
           icon={<Globe className="size-3.5" />}
           href={PROFILE.websiteUrl}
           value={PROFILE.website}
-        />
-        <AboutRow
-          icon={<Terminal className="size-3.5" />}
-          href={PROFILE.xUrl}
-          value={PROFILE.x}
         />
       </ul>
 
@@ -176,7 +170,11 @@ export function StackView() {
 }
 
 const TAG_CLASS = {
+  aws: "border-badge-aws/40 bg-badge-aws/10 text-badge-aws",
+  kubernetes: "border-badge-kubernetes/40 bg-badge-kubernetes/10 text-badge-kubernetes",
   java: "border-badge-java/40 bg-badge-java/10 text-badge-java",
+  php: "border-badge-php/40 bg-badge-php/10 text-badge-php",
+  python: "border-badge-python/40 bg-badge-python/10 text-badge-python",
   shell: "border-badge-shell/40 bg-badge-shell/10 text-badge-shell",
   bi: "border-badge-bi/40 bg-badge-bi/10 text-badge-bi",
 } as const;
@@ -227,8 +225,7 @@ export function InfrastructureView() {
     <div className="term-route-window stagger-in">
       <PathHeading path="~/infrastructure" title="Infrastructure Behind This Site" />
       <p className="mb-5 max-w-xl text-sm text-term-muted text-pretty">
-        Static site on object storage, fronted by a CDN, with DNS and TLS on
-        the edge. CI/CD ships every change from Git.
+        Serverless architecture built on AWS. The frontend is a static site hosted on S3 and distributed globally via CloudFront. Visitor counts are fetched via API Gateway, processed by Lambda, and stored in DynamoDB.
       </p>
       <InfraDiagram />
     </div>
@@ -277,87 +274,87 @@ function VLink() {
   );
 }
 
+function HLink() {
+  return (
+    <div className="flex w-full items-center justify-center" aria-hidden="true">
+      <div className="w-full h-px border-t border-dashed border-term-border-strong" />
+    </div>
+  );
+}
+
 function InfraDiagram() {
-  const user = (
-    <InfraNode
-      tone="user"
-      title="User"
-      icon={<User className="size-4" />}
-    />
-  );
-  const dns = <InfraNode tone="cyan" title="Cloudflare DNS" icon={<Globe className="size-4" />} />;
-  const tunnel = (
-    <InfraNode tone="cyan" title="Cloudflare Tunnel" icon={<Cloud className="size-4" />} />
-  );
-  const s3 = (
-    <InfraNode tone="green" title="S3" subtitle="Static Site" icon={<Database className="size-4" />} />
-  );
-  const gha = (
-    <InfraNode
-      tone="amber"
-      title="GitHub Actions"
-      subtitle="CI/CD"
-      icon={<GitBranch className="size-4" />}
-    />
-  );
-  const r53 = (
-    <InfraNode tone="purple" title="Route 53" subtitle="Domain" icon={<Network className="size-4" />} />
-  );
-  const acm = (
-    <InfraNode tone="purple" title="ACM" subtitle="SSL" icon={<Shield className="size-4" />} />
-  );
-  const cf = (
-    <InfraNode tone="green" title="CloudFront" subtitle="CDN" icon={<Cloud className="size-4" />} />
-  );
+  // Frontend
+  const user = <InfraNode tone="user" title="User" icon={<User className="size-4" />} />;
+  const r53 = <InfraNode tone="purple" title="Route 53" subtitle="DNS" icon={<Globe className="size-4" />} />;
+  const cf = <InfraNode tone="purple" title="CloudFront" subtitle="CDN / HTTPS" icon={<Cloud className="size-4" />} />;
+  const s3 = <InfraNode tone="green" title="S3 Bucket" subtitle="Static Site" icon={<Database className="size-4" />} />;
+  
+  // Backend
+  const api = <InfraNode tone="cyan" title="API Gateway" subtitle="REST API" icon={<Network className="size-4" />} />;
+  const lambda = <InfraNode tone="amber" title="AWS Lambda" subtitle="Compute" icon={<Zap className="size-4" />} />;
+  const db = <InfraNode tone="green" title="DynamoDB" subtitle="Visitor Count" icon={<Database className="size-4" />} />;
+  
+  // CI/CD
+  const cicd = <InfraNode tone="user" title="GitHub Actions" subtitle="CI/CD (WIP)" icon={<GitBranch className="size-4" />} />;
 
   return (
     <>
+      {/* Mobile Layout (Vertical Flow) */}
       <div className="flex flex-col items-center md:hidden">
         {user}
         <VLink />
-        {dns}
-        <VLink />
-        {tunnel}
-        <VLink />
-        {s3}
-        <VLink />
-        {gha}
-        <div className="my-4 h-px w-40 border-t border-dashed border-term-purple" />
         {r53}
         <VLink />
-        {acm}
-        <VLink />
         {cf}
+        <VLink />
+        {s3}
+        <div className="my-4 h-px w-40 border-t border-dashed border-term-border-strong" />
+        <p className="text-2xs text-term-muted mb-2 font-mono">Backend API Triggered</p>
+        {api}
+        <VLink />
+        {lambda}
+        <VLink />
+        {db}
+        <div className="my-4 h-px w-40 border-t border-dashed border-term-border-strong" />
+        {cicd}
       </div>
 
-      <div className="hidden md:grid md:grid-cols-[9rem_2.5rem_9rem] md:items-center md:justify-center md:justify-items-center">
+      {/* Desktop Layout (2 Columns: Frontend vs Backend) */}
+      <div className="hidden md:grid md:grid-cols-[9rem_3rem_9rem] md:items-center md:justify-center md:justify-items-center gap-y-1">
+        {/* Row 1 */}
         {user}
         <span />
-        <span />
+        {cicd}
+
+        {/* Row 2 */}
         <VLink />
         <span />
-        <span />
-        {dns}
-        <span />
-        <span />
         <VLink />
-        <span />
-        <span />
-        {tunnel}
-        <div className="h-px w-full border-t border-dashed border-term-purple" />
+
+        {/* Row 3 */}
         {r53}
+        <span />
+        {api}
+
+        {/* Row 4 */}
         <VLink />
         <span />
         <VLink />
-        {s3}
-        <div className="h-px w-full border-t border-dashed border-term-green" />
-        {acm}
-        <VLink />
-        <span />
-        <VLink />
-        {gha}
-        <span />
+
+        {/* Row 5 */}
         {cf}
+        <HLink /> {/* Connecting Frontend JS to Backend API conceptually */}
+        {lambda}
+
+        {/* Row 6 */}
+        <VLink />
+        <span />
+        <VLink />
+
+        {/* Row 7 */}
+        {s3}
+        <span />
+        {db}
       </div>
     </>
   );

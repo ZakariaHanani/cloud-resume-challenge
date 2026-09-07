@@ -35,8 +35,6 @@ const OPEN_TARGETS: Record<string, string> = {
   mail: `mailto:${PROFILE.email}`,
   web: PROFILE.websiteUrl,
   website: PROFILE.websiteUrl,
-  x: PROFILE.xUrl,
-  twitter: PROFILE.xUrl,
 };
 
 function resolvePage(token: string | undefined): NavItem | undefined {

@@ -738,7 +738,7 @@ function StatusBar({
           data-visitor-counter
           aria-label="Visitor count"
         >
-          Visitors: {visitorCount}
+          Visitors : {visitorCount}
         </span>
         <span className="tabular-nums">{clock || "—"}</span>
       </div>
