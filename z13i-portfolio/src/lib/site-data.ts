@@ -118,7 +118,7 @@ export const STACK: TechGroup[] = [
     title: "CI/CD & Automation",
     items: [
       { name: "Jenkins", mark: "jenkins" },
-      { name: "GitHub", mark: "github" },
+      { name: "GitHub Actions", mark: "github" },
       { name: "Bash", mark: "bash" },
     ],
   },
