@@ -100,10 +100,11 @@ export const STACK: TechGroup[] = [
     title: "Cloud & Infrastructure",
     items: [
       { name: "AWS", mark: "aws" },
-      { name: "IAM", mark: "iam" },
       { name: "Lambda", mark: "lambda" },
       { name: "EC2", mark: "ec2" },
       { name: "S3", mark: "s3" },
+      { name: "CloudFront", mark: "cloudfront" },
+      { name: "Route 53", mark: "route53" },
     ],
   },
   {
