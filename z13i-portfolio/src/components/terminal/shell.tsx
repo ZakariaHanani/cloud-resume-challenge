@@ -38,6 +38,8 @@ const NAV_ICONS: Record<PageId, typeof User> = {
 const VISITOR_API_URL =
   import.meta.env.VITE_VISITOR_API_URL ??
   "https://3r1qwdzxeg.execute-api.eu-west-3.amazonaws.com/prod/visit-count";
+const VISITOR_MARKER = "z13i-visitor-counted";
+const VISITOR_TOTAL = "z13i-visitor-total";
 
 export function TerminalShell({ children }: { children: ReactNode }) {
   const pathname = useLocation({ select: (l) => l.pathname });
@@ -92,6 +94,12 @@ export function TerminalShell({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (window.localStorage.getItem(VISITOR_MARKER)) {
+      const cachedTotal = Number(window.localStorage.getItem(VISITOR_TOTAL));
+      if (Number.isFinite(cachedTotal)) setVisitorCount(cachedTotal);
+      return;
+    }
+
     fetch(VISITOR_API_URL)
       .then((response) => {
         if (!response.ok) throw new Error("Visitor API request failed");
@@ -108,6 +116,8 @@ export function TerminalShell({ children }: { children: ReactNode }) {
           Number.isFinite(payload.visit_count)
         ) {
           setVisitorCount(payload.visit_count);
+          window.localStorage.setItem(VISITOR_MARKER, "true");
+          window.localStorage.setItem(VISITOR_TOTAL, String(payload.visit_count));
         }
       })
       .catch(() => undefined);

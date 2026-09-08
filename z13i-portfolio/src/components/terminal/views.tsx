@@ -188,13 +188,13 @@ export function InfrastructureView() {
   return (
     <article className="term-route-window infra-article stagger-in">
       <header className="infra-article-header">
-        <p className="text-xs text-term-accent">~/infrastructure / build log 001</p>
+        <p className="text-xs text-term-accent">~/infrastructure</p>
         <h1 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-term-fg sm:text-5xl">
-          I turned my cloud resume into a small production system
+          Started with a resume, learned AWS the hard way
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-term-muted">
-          What I built, what broke, and how the browser, AWS, GitHub Actions, and Docker fit
-          together behind this portfolio.
+          What I built, what broke, and how the browser, AWS, GitHub Actions, and Docker ended up
+          fitting together behind this portfolio.
         </p>
         <div className="infra-article-byline">
           <span>BY {PROFILE.displayName.toUpperCase()}</span>
