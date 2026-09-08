@@ -26,9 +26,14 @@ export const PROFILE = {
   wordmark: "Z13I",
   name: "zakaria hanani",
   displayName: "Zakaria Hanani",
-  host: "zakaria@archlinux",
-  title: " Software Engineer | System Administrator | Linux Enthusiast | Problem Solver",
-  roles: ["DevOps Engineer", "System Administrator", "Linux Enthusiast", "Problem Solver"],
+  host: "zakaria@z13iOS",
+  title: "Software Engineering Student | Aspiring Cloud & DevOps Engineer | Linux & Distributed Systems",
+  roles: [
+    "Software Engineering Student",
+    "Cloud Engineer",
+    "Linux Enthusiast",
+    "Distributed Systems Builder",
+  ],
   location: "Biougra, Chtouka Ait Baha,  Morocco",
   email: "zakariahanani20@gmail.com",
   github: "ZakariaHanani",
@@ -43,7 +48,7 @@ export const PROFILE = {
     "Currently somewhere between DevOps, Cloud, and “let me see how this actually works under the hood."
 
   ],
-  note: "I'm not a frontend developer (and honestly, I never enjoyed it). I prefer building robust backend systems and reliable infrastructure. Frontend is just something I do when I have to — because of AI.",
+  note: "Yes, I built the frontend too (RIP to my Copilot credits), but UI isn't my true love. I thrive in the infrastructure layer—tinkering with Linux, automating cloud deployments, and architecting distributed systems that actually talk to each other without falling apart."
 } as const;
 
 export const NAV: NavItem[] = [

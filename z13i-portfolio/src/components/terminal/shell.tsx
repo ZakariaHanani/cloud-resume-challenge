@@ -295,15 +295,15 @@ export function TerminalShell({ children }: { children: ReactNode }) {
 
           <div className="term-content-panel min-w-0 flex-1">
             <main className="term-scroll relative min-h-0 flex-1 overflow-y-auto p-2">
-              <div key={outletKey} className="page-enter">
-                {children}
-              </div>
               <CommandLine
                 current={current}
                 onNavigate={(path) => void navigate({ to: path })}
                 focusSignal={focusSignal}
                 onDangerousCommand={setDangerousCommand}
               />
+              <div key={outletKey} className="page-enter">
+                {children}
+              </div>
             </main>
             <aside className="term-right-rail">
               <NeofetchPanel />
@@ -352,7 +352,7 @@ function BootScreen() {
         <div className="boot-logo term-wordmark text-4xl text-term-accent">
           {PROFILE.wordmark}
         </div>
-        <p className="boot-kicker">archlinux :: user session</p>
+        <p className="boot-kicker">z13iOS :: user session</p>
         <div className="boot-lines" aria-hidden="true">
           <p>[ OK ] mounting /home/zakaria</p>
           <p>[ OK ] starting cloud systems</p>
@@ -377,7 +377,11 @@ function DangerousCommandOverlay({
     <div className="danger-overlay" role="alertdialog" aria-modal="true">
       <div className="danger-overlay-inner">
         <p className="danger-kicker">sir dar innak</p>
-        <div className="danger-logo" aria-hidden="true">!</div>
+        <img
+          className="danger-meme"
+          src="/dog%20meme.png"
+          alt="A dog meme warning against deleting the system"
+        />
         <h2>REALLY?</h2>
         <p className="danger-command">$ {command}</p>
         <p className="danger-copy">
@@ -434,7 +438,7 @@ function NeofetchPanel() {
       </header>
       <div className="term-neofetch-body">
         <div className="term-neofetch-logo flex flex-col items-center justify-center gap-2">
-          <span className="term-wordmark text-xl text-term-accent">
+          <span className="term-neofetch-logo-wordmark term-wordmark text-xl text-term-accent">
             {PROFILE.wordmark}
           </span>
           <span className="text-center text-2xs text-term-dim">portfolio</span>
@@ -442,7 +446,7 @@ function NeofetchPanel() {
         <div className="term-neofetch-data">
           <p className="text-term-accent">{PROFILE.host}</p>
           <p><span className="text-term-green">Name:</span> {PROFILE.displayName}</p>
-          <p><span className="text-term-green">OS:</span> Arch Linux x86_64</p>
+          <p><span className="text-term-green">OS:</span> z13iOS x86_64</p>
           <p><span className="text-term-green">Role:</span> {PROFILE.roles[0]}</p>
           <p><span className="text-term-green">Base:</span> {PROFILE.location}</p>
           <p><span className="text-term-green">Stack:</span> Cloud / Linux / Java</p>
@@ -464,9 +468,6 @@ function NeofetchPanel() {
           <div className="term-neofetch-alert" role="alertdialog" aria-modal="true">
             <strong>nope, sir</strong>
             <span>neofetch is staying right here.</span>
-            <button type="button" onClick={() => setCloseMessage(false)}>
-              keep it open
-            </button>
           </div>
         </>
       ) : null}
@@ -485,7 +486,7 @@ function QuotePanel() {
         <p className="flex items-center gap-2 text-xs font-medium text-term-accent">
           A quick note
         </p>
-        <p className="mt-2 text-xs leading-relaxed text-term-muted text-pretty">
+        <p className="term-quote-copy mt-2 text-xs leading-relaxed text-term-muted text-pretty">
           {PROFILE.note}
         </p>
       </div>

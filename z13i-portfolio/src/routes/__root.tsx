@@ -7,7 +7,7 @@ import { AppErrorComponent } from "@/lib/error-component";
 
 const APP_NAME = "Z13I — Zakaria Hanani";
 const APP_DESCRIPTION =
-  "Terminal-style portfolio of Zakaria Hanani — DevOps & backend engineer. Linux, cloud, and distributed systems.";
+  "Zakaria Hanani — Software Engineering Student | Linux, Cloud & Distributed Systems | Systems & Cloud Engineer";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -36,7 +36,7 @@ function RootDocument() {
 function NotFound() {
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center gap-3 px-6 text-center">
-      <p className="text-sm text-term-accent">zakaria@archlinux:~$ cd</p>
+      <p className="text-sm text-term-accent">zakaria@hananiOs:~$ cd</p>
       <h1 className="text-lg font-semibold text-term-fg">
         bash: cd: no such file or directory
       </h1>

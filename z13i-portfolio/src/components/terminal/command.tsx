@@ -90,7 +90,7 @@ export function runCommand(raw: string, current: NavItem): CommandResult {
 
   if (cmd === "uname") {
     return {
-      lines: ["Linux archlinux 6.10.0-z13i #1 SMP PREEMPT x86_64 GNU/Linux"],
+      lines: ["Linux z13iOS 6.10.0-z13i #1 SMP PREEMPT x86_64 GNU/Linux"],
     };
   }
 
@@ -183,7 +183,7 @@ export function runCommand(raw: string, current: NavItem): CommandResult {
         "",
         `     ${PROFILE.host}`,
         "     ---------------------",
-        "     OS:        Arch Linux x86_64",
+        "     OS:        z13iOS x86_64",
         "     Host:      Z13I Portfolio",
         "     Kernel:    6.10.0-z13i",
         "     Shell:     zsh 5.9",
