@@ -1,4 +1,4 @@
-```markdown
+
 # Cloud Resume Challenge
 
 My implementation of the [Cloud Resume Challenge](https://cloudresumechallenge.dev/) — a serverless, cloud-native resume site built with AWS, automated with GitHub Actions, and containerized with Docker.
