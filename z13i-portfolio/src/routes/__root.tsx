@@ -7,7 +7,7 @@ import { AppErrorComponent } from "@/lib/error-component";
 
 const APP_NAME = "Z13I — Zakaria Hanani";
 const APP_DESCRIPTION =
-  "Zakaria Hanani — Software Engineering Student | Linux, Cloud & Distributed Systems | Systems & Cloud Engineer";
+  "Zakaria Hanani — Software Engineering Student | Aspiring Cloud & DevOps Engineer | Linux & Distributed Systems";
 
 export const Route = createRootRoute({
   head: () => ({
