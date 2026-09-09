@@ -584,7 +584,7 @@ function TitleBar({
       </p>
       <div className="flex w-28 items-center justify-end gap-1">
         <a
-          href="/Zakaria-Hanani-CV.pdf"
+          href="/Zakaria-Hanani-CV-en.pdf"
           download
           aria-label="Download Zakaria Hanani CV"
           title="Download CV"
