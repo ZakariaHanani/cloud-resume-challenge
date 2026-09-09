@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, useRouterState } from "@tanstack/react-
 import { format } from "date-fns";
 import {
   ChevronRight,
+  Download,
   Folder,
   Github,
   Layers,
@@ -581,7 +582,16 @@ function TitleBar({
       <p className="truncate text-xs text-term-muted">
         {PROFILE.host}:~
       </p>
-      <div className="flex w-20 items-center justify-end gap-1">
+      <div className="flex w-28 items-center justify-end gap-1">
+        <a
+          href="/Zakaria-Hanani-CV.pdf"
+          download
+          aria-label="Download Zakaria Hanani CV"
+          title="Download CV"
+          className="rounded p-1.5 text-term-dim transition-colors hover:text-term-accent"
+        >
+          <Download className="size-3.5" />
+        </a>
         <button
           type="button"
           aria-label={maximized ? "Restore" : "Maximize"}
