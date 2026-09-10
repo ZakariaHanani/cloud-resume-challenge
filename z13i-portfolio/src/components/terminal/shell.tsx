@@ -583,15 +583,31 @@ function TitleBar({
         {PROFILE.host}:~
       </p>
       <div className="flex w-28 items-center justify-end gap-1">
-        <a
-          href="/Zakaria-Hanani-CV-en.pdf"
-          download
-          aria-label="Download Zakaria Hanani CV"
-          title="Download CV"
-          className="rounded p-1.5 text-term-dim transition-colors hover:text-term-accent"
-        >
-          <Download className="size-3.5" />
-        </a>
+        <details className="relative">
+          <summary
+            aria-label="Download CV"
+            title="Download CV"
+            className="list-none rounded p-1.5 text-term-dim transition-colors hover:text-term-accent [&::-webkit-details-marker]:hidden"
+          >
+            <Download className="size-3.5" />
+          </summary>
+          <div className="absolute top-full right-0 z-20 mt-2 flex min-w-36 flex-col gap-1 rounded-md border border-term-border bg-term-window p-1.5 shadow-lg">
+            <a
+              href="/Zakaria-Hanani-CV-en.pdf"
+              download
+              className="rounded px-2 py-1.5 text-left text-xs text-term-muted transition-colors hover:bg-term-raised hover:text-term-accent"
+            >
+              CV English (EN)
+            </a>
+            <a
+              href="/Zakaria_Hanani_CV_FR.pdf"
+              download
+              className="rounded px-2 py-1.5 text-left text-xs text-term-muted transition-colors hover:bg-term-raised hover:text-term-accent"
+            >
+              CV Français (FR)
+            </a>
+          </div>
+        </details>
         <button
           type="button"
           aria-label={maximized ? "Restore" : "Maximize"}
