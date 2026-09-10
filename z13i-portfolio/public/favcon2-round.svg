@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="50" fill="#ededed" />
+  <path fill="#a71318" transform="rotate(-180 50 50)" d="M29 24h42v10H39v8h12v10H39v7h10v10h10v7h12v10H29V76h31v-7H50V59H40V49H29Z" />
+</svg>
