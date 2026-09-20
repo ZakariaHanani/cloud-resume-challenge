@@ -593,14 +593,14 @@ function TitleBar({
           </summary>
           <div className="absolute top-full right-0 z-20 mt-2 flex min-w-36 flex-col gap-1 rounded-md border border-term-border bg-term-window p-1.5 shadow-lg">
             <a
-              href="/Zakaria-Hanani-CV-en.pdf"
+              href="/zakaria_hanani_cv_en.pdf"
               download
               className="rounded px-2 py-1.5 text-left text-xs text-term-muted transition-colors hover:bg-term-raised hover:text-term-accent"
             >
               CV English (EN)
             </a>
             <a
-              href="/Zakaria_Hanani_CV_FR.pdf"
+              href="/zakaria_hanani_cv_fr.pdf"
               download
               className="rounded px-2 py-1.5 text-left text-xs text-term-muted transition-colors hover:bg-term-raised hover:text-term-accent"
             >
