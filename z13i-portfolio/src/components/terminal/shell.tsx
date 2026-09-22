@@ -39,7 +39,8 @@ const NAV_ICONS: Record<PageId, typeof User> = {
 const VISITOR_API_URL =
   import.meta.env.VITE_VISITOR_API_URL ??
   "https://3r1qwdzxeg.execute-api.eu-west-3.amazonaws.com/prod/visit-count";
-const VISITOR_MARKER = "z13i-visitor-counted";
+const VISITOR_MARKER = "z13i-visitor-counted-v2";
+const VISITOR_ID = "z13i-visitor-id";
 const VISITOR_TOTAL = "z13i-visitor-total";
 
 export function TerminalShell({ children }: { children: ReactNode }) {
@@ -101,7 +102,15 @@ export function TerminalShell({ children }: { children: ReactNode }) {
       return;
     }
 
-    fetch(VISITOR_API_URL)
+    let visitorId = window.localStorage.getItem(VISITOR_ID);
+    if (!visitorId) {
+      visitorId = crypto.randomUUID();
+      window.localStorage.setItem(VISITOR_ID, visitorId);
+    }
+
+    fetch(VISITOR_API_URL, {
+      headers: { "X-Visitor-Id": visitorId },
+    })
       .then((response) => {
         if (!response.ok) throw new Error("Visitor API request failed");
         return response.json() as Promise<{
@@ -396,7 +405,7 @@ function DangerousCommandOverlay({
         <h2>REALLY?</h2>
         <p className="danger-command">$ {command}</p>
         <p className="danger-copy">
-          You confirm that you are a dumb stupid?
+          Are you seriously admitting that you’re dumb and stupid?
         </p>
         <div className="danger-actions">
           <button type="button" onClick={onClose} className="danger-cancel">
