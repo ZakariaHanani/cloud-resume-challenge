@@ -210,6 +210,15 @@ export const PROJECTS = [
     stars: 1,
     href: "https://github.com/ZakariaHanani/Roti-Or",
   },
+
+  {
+    title: "Loyalty Platform",
+    blurb:
+      "A Spring Boot microservices loyalty platform for customer points, rewards, QR-code transactions, account management, and AWS deployment.",
+    tag: "Spring Boot",
+    tagTone: "java" as const,
+    stars: 0,
+  },
 ];
 
 

@@ -190,7 +190,7 @@ export function InfrastructureView() {
       <header className="infra-article-header">
         <p className="text-xs text-term-accent">~/infrastructure</p>
         <h1 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-term-fg sm:text-5xl">
-          Started with a resume, learned AWS the hard way
+          The infrastructure behind this portfolio
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-term-muted">
           What I built, what broke, and how the browser, AWS, GitHub Actions, and Docker ended up
