@@ -108,9 +108,7 @@ export function TerminalShell({ children }: { children: ReactNode }) {
       window.localStorage.setItem(VISITOR_ID, visitorId);
     }
 
-    fetch(VISITOR_API_URL, {
-      headers: { "X-Visitor-Id": visitorId },
-    })
+    fetch(VISITOR_API_URL)
       .then((response) => {
         if (!response.ok) throw new Error("Visitor API request failed");
         return response.json() as Promise<{
